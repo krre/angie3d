@@ -1,5 +1,3 @@
 /.vscode
 /.zed
-/target
-/dist
-Cargo.lock
+.zig-cache/
