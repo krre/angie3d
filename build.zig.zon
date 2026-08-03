@@ -1,7 +1,7 @@
 .{
-    .name = .antiq,
+    .name = .angie3d,
     .version = "0.1.0",
-    .fingerprint = 0x794c78189078c385,
+    .fingerprint = 0x1fc72c6b5e420de0,
     .minimum_zig_version = "0.16.0",
     .dependencies = .{},
     .paths = .{
