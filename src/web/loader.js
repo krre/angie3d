@@ -21,6 +21,12 @@ function saveObject(object) {
     return id;
 }
 
+function decodeUtf8(ptr, len) {
+  const bytes = new Uint8Array(wasm.instance.exports.memory.buffer, ptr, len);
+  const decoder = new TextDecoder('utf8');
+  return decoder.decode(bytes);
+}
+
 async function gpuInit() {
     const gpu = navigator.gpu;
 
@@ -71,16 +77,13 @@ async function wasmInit() {
     const imports = {
         env: {
             consoleLog: (ptr, len) => {
-                const bytes = new Uint8Array(wasm.instance.exports.memory.buffer, ptr, len);
-                console.log(new TextDecoder('utf8').decode(bytes));
+                console.log(decodeUtf8(ptr, len));
             },
             consoleErr: (ptr, len) => {
-              const bytes = new Uint8Array(wasm.instance.exports.memory.buffer, ptr, len);
-              console.error(new TextDecoder('utf8').decode(bytes));
+              console.error(decodeUtf8(ptr, len));
             },
             setTitle: (ptr, len) => {
-              const bytes = new Uint8Array(wasm.instance.exports.memory.buffer, ptr, len);
-              window.document.title = new TextDecoder('utf8').decode(bytes);
+              window.document.title = decodeUtf8(ptr, len)
             },
             windowWidth: () => {
                 return window.innerWidth;
