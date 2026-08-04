@@ -78,6 +78,10 @@ async function wasmInit() {
               const bytes = new Uint8Array(wasm.instance.exports.memory.buffer, ptr, len);
               console.error(new TextDecoder('utf8').decode(bytes));
             },
+            setTitle: (ptr, len) => {
+              const bytes = new Uint8Array(wasm.instance.exports.memory.buffer, ptr, len);
+              window.document.title = new TextDecoder('utf8').decode(bytes);
+            },
             windowWidth: () => {
                 return window.innerWidth;
             },
