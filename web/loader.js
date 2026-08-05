@@ -230,6 +230,15 @@ function eventsInit() {
     });
 }
 
+function showError(message) {
+  const errorOverlay = document.getElementById('error-overlay');
+
+  if (errorOverlay) {
+      errorOverlay.textContent = message;
+      errorOverlay.style.display = 'block';
+  }
+}
+
 async function init() {
   try {
     await gpuInit();
@@ -237,7 +246,7 @@ async function init() {
     eventsInit();
     wasm.instance.exports.start();
   } catch (e) {
-    console.error(e);
+    showError(e.message || String(e));
   }
 }
 
