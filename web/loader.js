@@ -30,9 +30,8 @@ function decodeUtf8(ptr, len) {
 async function gpuInit() {
     const gpu = navigator.gpu;
 
-    if (!gpu) {
-        console.error('User agent doesn’t support WebGPU');
-        return;
+  if (!gpu) {
+      throw new Error('User agent doesn’t support WebGPU');
     }
 
     gpuId = saveObject(gpu);
@@ -40,8 +39,7 @@ async function gpuInit() {
     const adapter = await gpu.requestAdapter();
 
     if (!adapter) {
-        console.error('No WebGPU adapters found');
-        return;
+        throw new Error('No WebGPU adapters found');
     }
 
     adapterId = saveObject(adapter);
@@ -52,15 +50,13 @@ async function gpuInit() {
     const canvas = document.querySelector('canvas');
 
     if (!canvas) {
-        console.error('Canvas not found');
-        return;
+        throw new Error('Canvas not found');
     }
 
     const canvasContext = canvas.getContext('webgpu');
 
     if (!canvasContext) {
-        console.error('GPUCanvasContext object not defined');
-        return;
+        throw new Error('GPUCanvasContext object not defined');
     }
 
     canvasContextId = saveObject(canvasContext);
@@ -232,14 +228,17 @@ function eventsInit() {
     window.addEventListener('keyup', function (event) {
         exports.keyUp(event.key.charCodeAt(0))
     });
-
 }
 
 async function init() {
+  try {
     await gpuInit();
     await wasmInit();
     eventsInit();
     wasm.instance.exports.start();
+  } catch (e) {
+    console.error(e);
+  }
 }
 
 init();
