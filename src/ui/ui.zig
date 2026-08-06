@@ -1,3 +1,5 @@
+pub const node = @import("node/node.zig");
+
 const geometry = @import("geometry.zig");
 pub const Pos2D = geometry.Pos2D;
 pub const Size2D = geometry.Size2D;
