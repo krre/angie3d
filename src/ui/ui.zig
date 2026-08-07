@@ -8,3 +8,4 @@ pub const Pos3D = geometry.Pos3D;
 pub const Size3D = geometry.Size3D;
 
 pub const Color = @import("Color.zig");
+pub const EventHandler = @import("EventHandler.zig");
