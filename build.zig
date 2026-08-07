@@ -10,6 +10,19 @@ pub fn build(b: *std.Build) void {
         .optimize = optimize,
     });
 
+    mod.export_symbol_names = &[_][]const u8{
+        "start",
+        "resize",
+        "mouseMove",
+        "mouseClick",
+        "mouseDoubleClick",
+        "mouseDown",
+        "mouseUp",
+        "mouseWheel",
+        "keyDown",
+        "keyUp",
+    };
+
     const mod_tests = b.addTest(.{
         .root_module = mod,
     });
