@@ -1,3 +1,4 @@
 /.vscode
 /.zed
 .zig-cache/
+zig-out/
