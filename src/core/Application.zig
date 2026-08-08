@@ -13,15 +13,14 @@ const Application = @This();
 
 allocator: Allocator,
 renderer: Renderer,
-root_widget: *Widget,
+root_widget: ?*Widget = null,
 size: Size2D = .{ .width = 0, .height = 0 },
 event_handler: EventHandler = undefined,
 
-pub fn init(allocator: Allocator, root_widget: *Widget) Application {
+pub fn init(allocator: Allocator) Application {
     var self = Application{
         .allocator = allocator,
         .renderer = Renderer.init(),
-        .root_widget = root_widget,
     };
 
     self.event_handler = EventHandler{
@@ -47,12 +46,15 @@ pub fn eventHandler(self: *Application) *EventHandler {
     return &self.event_handler;
 }
 
-pub fn setTitle(title: []const u8) void {
+pub fn setTitle(self: *Application, title: []const u8) void {
+    _ = self;
     js.setTitle(title.ptr, title.len);
 }
 
 pub fn render(self: *Application) void {
-    self.renderer.render(self.root_widget);
+    if (self.root_widget) |value| {
+        self.renderer.render(value);
+    }
 }
 
 pub fn resize(ctx: *anyopaque, size: Size2D) void {
