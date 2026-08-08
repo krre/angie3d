@@ -4,7 +4,7 @@ const angie3d = @import("angie3d");
 const console = angie3d.console;
 const js = angie3d.js;
 const Box = angie3d.ui.widget.Box;
-const Application = angie3d.ui.Application;
+const Application = angie3d.core.Application;
 
 const HelloWorld = struct {
     pub var app: Application = undefined;

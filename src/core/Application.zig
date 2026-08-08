@@ -2,8 +2,8 @@ const std = @import("std");
 const Allocator = std.mem.Allocator;
 
 const js = @import("../js.zig");
-const geometry = @import("geometry.zig");
-const Widget = @import("widget/widget.zig").Widget;
+const geometry = @import("../ui/geometry.zig");
+const Widget = @import("../ui/widget/widget.zig").Widget;
 const Pos2D = geometry.Pos2D;
 const Size2D = geometry.Size2D;
 const EventHandler = @import("EventHandler.zig");

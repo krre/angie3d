@@ -1,6 +1,6 @@
 const std = @import("std");
 
-const geometry = @import("geometry.zig");
+const geometry = @import("../ui/geometry.zig");
 const Pos2D = geometry.Pos2D;
 const Size2D = geometry.Size2D;
 

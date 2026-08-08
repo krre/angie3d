@@ -1,4 +1,4 @@
-const EventHandler = @import("ui/EventHandler.zig");
+const EventHandler = @import("core/EventHandler.zig");
 const Id = @import("types.zig").Id;
 
 pub var event_handler: *EventHandler = undefined;
