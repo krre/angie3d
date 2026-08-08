@@ -1,6 +1,5 @@
 const std = @import("std");
 const angie3d = @import("angie3d");
-const core = angie3d.core;
 const Widget = angie3d.ui.widget.Widget;
 const Box = angie3d.ui.widget.Box;
 const Application = angie3d.core.Application;
@@ -24,5 +23,5 @@ const HelloWorld = struct {
 };
 
 export fn main() void {
-    core.runApp(HelloWorld, std.heap.wasm_allocator);
+    angie3d.runApp(HelloWorld, std.heap.wasm_allocator);
 }
