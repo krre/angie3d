@@ -17,7 +17,7 @@ const HelloWorld = struct {
     }
 };
 
-export fn start() void {
+export fn main() void {
     HelloWorld.init(std.heap.wasm_allocator);
     js.event_handler = HelloWorld.app.eventHandler();
     HelloWorld.app.render();

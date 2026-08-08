@@ -13,7 +13,7 @@ pub fn build(b: *std.Build) void {
     });
 
     mod.export_symbol_names = &[_][]const u8{
-        "start",
+        "main",
         "resize",
         "mouseMove",
         "mouseClick",
