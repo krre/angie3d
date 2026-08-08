@@ -11,12 +11,11 @@ const HelloWorld = struct {
     root: Box,
 
     pub fn init(app: *Application) Self {
-        const hello_world = Self{
+        app.setTitle("Hello World!");
+
+        return Self{
             .root = Box.init(app.allocator),
         };
-
-        app.setTitle("Hello World!");
-        return hello_world;
     }
 
     pub fn rootWidget(self: *Self) *Widget {
