@@ -18,27 +18,24 @@ size: Size2D = .{ .width = 0, .height = 0 },
 event_handler: EventHandler = undefined,
 
 pub fn init(allocator: Allocator) Application {
-    var application = Application{
+    return Application{
         .allocator = allocator,
         .renderer = Renderer.init(),
-    };
-
-    application.event_handler = EventHandler{
-        .ptr = undefined,
-        .vtable = &.{
-            .resize = resize,
-            .mouseMove = mouseMove,
-            .mouseClick = mouseClick,
-            .mouseDoubleClick = mouseDoubleClick,
-            .mouseDown = mouseDown,
-            .mouseUp = mouseUp,
-            .mouseWheel = mouseWheel,
-            .keyDown = keyDown,
-            .keyUp = keyUp,
+        .event_handler = EventHandler{
+            .ptr = undefined,
+            .vtable = &.{
+                .resize = resize,
+                .mouseMove = mouseMove,
+                .mouseClick = mouseClick,
+                .mouseDoubleClick = mouseDoubleClick,
+                .mouseDown = mouseDown,
+                .mouseUp = mouseUp,
+                .mouseWheel = mouseWheel,
+                .keyDown = keyDown,
+                .keyUp = keyUp,
+            },
         },
     };
-
-    return application;
 }
 
 pub fn eventHandler(self: *Application) *EventHandler {
