@@ -18,12 +18,12 @@ size: Size2D = .{ .width = 0, .height = 0 },
 event_handler: EventHandler = undefined,
 
 pub fn init(allocator: Allocator) Application {
-    var self = Application{
+    var application = Application{
         .allocator = allocator,
         .renderer = Renderer.init(),
     };
 
-    self.event_handler = EventHandler{
+    application.event_handler = EventHandler{
         .ptr = undefined,
         .vtable = &.{
             .resize = resize,
@@ -38,7 +38,7 @@ pub fn init(allocator: Allocator) Application {
         },
     };
 
-    return self;
+    return application;
 }
 
 pub fn eventHandler(self: *Application) *EventHandler {

@@ -5,19 +5,17 @@ const Box = angie3d.ui.widget.Box;
 const Application = angie3d.core.Application;
 
 const HelloWorld = struct {
-    const Self = @This();
-
     root: Box,
 
-    pub fn init(app: *Application) Self {
+    pub fn init(app: *Application) HelloWorld {
         app.setTitle("Hello World!");
 
-        return Self{
+        return HelloWorld{
             .root = Box.init(app.allocator),
         };
     }
 
-    pub fn rootWidget(self: *Self) *Widget {
+    pub fn rootWidget(self: *HelloWorld) *Widget {
         return &self.root.widget;
     }
 };
