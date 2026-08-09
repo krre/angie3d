@@ -9,12 +9,21 @@ pub const gfx = @import("gfx/gfx.zig");
 const std = @import("std");
 const Application = core.Application;
 
-var host_app: Application = undefined;
+pub fn App(comptime ClientApp: type) type {
+    return struct {
+        var host: Application = undefined;
+        var client: ClientApp = undefined;
 
-pub fn runApp(comptime App: type) void {
-    host_app = Application.init(std.heap.wasm_allocator);
-    var client_app = App.init(&host_app);
-    host_app.root_widget = client_app.rootWidget();
-    js.event_handler = host_app.eventHandler();
-    host_app.render();
+        pub fn run() void {
+            host = Application.init(std.heap.wasm_allocator);
+            client = ClientApp.init(&host);
+            host.root_widget = client.rootWidget();
+            js.event_handler = host.eventHandler();
+            host.render();
+        }
+    };
+}
+
+pub fn runApp(comptime ClientApp: type) void {
+    App(ClientApp).run();
 }
