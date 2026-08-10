@@ -1,4 +1,5 @@
 pub const Box = @import("Box.zig");
+pub const Rectangle = @import("Rectangle.zig");
 pub const Border = @import("Border.zig");
 
 const std = @import("std");

@@ -1,16 +1,16 @@
 const angie3d = @import("angie3d");
 const Widget = angie3d.ui.widget.Widget;
-const Box = angie3d.ui.widget.Box;
+const Rectangle = angie3d.ui.widget.Rectangle;
 const Application = angie3d.core.Application;
 
 const HelloWorld = struct {
-    root: Box,
+    root: Rectangle,
 
     pub fn init(app: *Application) HelloWorld {
         app.setTitle("Hello World!");
 
         return HelloWorld{
-            .root = Box.init(app.allocator),
+            .root = Rectangle.init(app.allocator),
         };
     }
 
