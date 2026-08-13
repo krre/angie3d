@@ -10,7 +10,7 @@ const HelloWorld = struct {
         app.setTitle("Hello World!");
 
         return HelloWorld{
-            .root = Rectangle.init(app.allocator),
+            .root = Rectangle.init(),
         };
     }
 

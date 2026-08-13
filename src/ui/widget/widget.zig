@@ -13,17 +13,15 @@ pub const Widget = struct {
     pos: Pos3D = .{ .x = 0, .y = 0, .z = 0 },
     size: Size3D = .{ .width = 0, .height = 0, .depth = 0 },
     vtable: *const VTable,
-    allocator: std.mem.Allocator,
 
     pub const VTable = struct {
         draw: *const fn (self: *Widget) void,
     };
 
-    pub fn init(allocator: std.mem.Allocator, vtable: *const VTable) Widget {
+    pub fn init(vtable: *const VTable) Widget {
         return Widget{
             .node = Node.init(),
             .vtable = vtable,
-            .allocator = allocator,
         };
     }
 

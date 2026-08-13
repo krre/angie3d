@@ -13,8 +13,8 @@ const vtable = Widget.VTable{
     .draw = &draw,
 };
 
-pub fn init(allocator: std.mem.Allocator) Box {
-    return Box{ .widget = Widget.init(allocator, &vtable) };
+pub fn init() Box {
+    return Box{ .widget = Widget.init(&vtable) };
 }
 
 pub fn asWidget(self: *Box) *Widget {
