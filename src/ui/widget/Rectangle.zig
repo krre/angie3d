@@ -5,9 +5,9 @@ const Color = @import("../Color.zig");
 
 const Rectangle = @This();
 
+widget: Widget,
 color: Color = Color.white,
 border: Border = .{},
-widget: Widget,
 
 const vtable = Widget.VTable{
     .draw = &draw,
@@ -15,6 +15,14 @@ const vtable = Widget.VTable{
 
 pub fn init(allocator: std.mem.Allocator) Rectangle {
     return Rectangle{ .widget = Widget.init(allocator, &vtable) };
+}
+
+pub fn asWidget(self: *Rectangle) *Widget {
+    return &self.widget;
+}
+
+pub fn fromWidget(widget: *Widget) *Rectangle {
+    return @fieldParentPtr("widget", widget);
 }
 
 fn draw(widget: *Widget) void {
