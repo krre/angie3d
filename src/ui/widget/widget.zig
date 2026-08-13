@@ -27,6 +27,14 @@ pub const Widget = struct {
         };
     }
 
+    pub fn asNode(self: *Widget) *Node {
+        return &self.node;
+    }
+
+    pub fn fromNode(node: *Node) *Widget {
+        return @fieldParentPtr("node", node);
+    }
+
     pub fn move(self: *Widget, pos: Pos3D) void {
         self.pos = pos;
     }
