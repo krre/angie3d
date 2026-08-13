@@ -25,10 +25,6 @@ pub const Widget = struct {
         };
     }
 
-    pub fn asNode(self: *Widget) *Node {
-        return &self.node;
-    }
-
     pub fn fromNode(node: *Node) *Widget {
         return @fieldParentPtr("node", node);
     }

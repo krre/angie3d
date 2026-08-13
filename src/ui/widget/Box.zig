@@ -17,10 +17,6 @@ pub fn init() Box {
     return Box{ .widget = Widget.init(&vtable) };
 }
 
-pub fn asWidget(self: *Box) *Widget {
-    return &self.widget;
-}
-
 pub fn fromWidget(widget: *Widget) *Box {
     return @fieldParentPtr("widget", widget);
 }
