@@ -2,7 +2,6 @@ pub const Box = @import("Box.zig");
 pub const Rectangle = @import("Rectangle.zig");
 pub const Border = @import("Border.zig");
 
-const std = @import("std");
 const geometry = @import("../geometry.zig");
 const Pos3D = geometry.Pos3D;
 const Size3D = geometry.Size3D;

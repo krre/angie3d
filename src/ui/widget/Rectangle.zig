@@ -1,4 +1,3 @@
-const std = @import("std");
 const Widget = @import("widget.zig").Widget;
 const Border = @import("Border.zig");
 const Color = @import("../Color.zig");
