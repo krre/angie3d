@@ -16,8 +16,8 @@ pub const Node = struct {
         self.children.deinit();
     }
 
-    pub fn addChild(self: *Node, child: *Node) !void {
+    pub fn addChild(self: *Node, allocator: std.mem.Allocator, child: *Node) !void {
         child.parent = self;
-        try self.children.append(child);
+        try self.children.append(allocator, child);
     }
 };
