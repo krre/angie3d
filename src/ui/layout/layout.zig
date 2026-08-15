@@ -1,3 +1,8 @@
+const linear = @import("linear.zig");
+pub const Row = linear.Row;
+pub const Column = linear.Column;
+pub const Layer = linear.Layer;
+
 const Node = @import("../node/node.zig").Node;
 
 pub const Layout = struct {
