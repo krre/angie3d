@@ -3,6 +3,10 @@ pub const Row = linear.Row;
 pub const Column = linear.Column;
 pub const Layer = linear.Layer;
 
+const positional = @import("positional.zig");
+pub const Position = positional.Position;
+pub const Center = positional.Center;
+
 const Node = @import("../node/node.zig").Node;
 
 pub const Layout = struct {
