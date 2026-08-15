@@ -15,6 +15,6 @@ const HelloWorld = struct {
     }
 };
 
-export fn main() void {
+export fn start() void {
     angie3d.runApp(HelloWorld);
 }

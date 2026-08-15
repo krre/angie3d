@@ -252,7 +252,7 @@ async function init() {
     await gpuInit();
     await wasmInit();
     eventsInit();
-    wasm.instance.exports.main();
+    wasm.instance.exports.start();
   } catch (e) {
     showError(e.message || String(e));
   }
