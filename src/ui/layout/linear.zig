@@ -25,7 +25,17 @@ pub const Layer = struct {
 
     pub fn init() Layer {
         return Layer{
-            .layout = Layer.init(),
+            .layout = Layout.init(),
+        };
+    }
+};
+
+pub const Grid = struct {
+    layout: Layout,
+
+    pub fn init() Grid {
+        return Grid{
+            .layout = Layout.init(),
         };
     }
 };
