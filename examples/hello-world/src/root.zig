@@ -13,10 +13,6 @@ const HelloWorld = struct {
             .root = Rectangle.init(),
         };
     }
-
-    pub fn rootWidget(self: *HelloWorld) *Widget {
-        return &self.root.widget;
-    }
 };
 
 export fn main() void {

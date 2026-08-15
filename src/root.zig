@@ -8,6 +8,7 @@ pub const gfx = @import("gfx/gfx.zig");
 
 const std = @import("std");
 const Application = core.Application;
+const Multiverse = ui.Multiverse;
 
 pub fn App(comptime ClientApp: type) type {
     return struct {
@@ -16,8 +17,8 @@ pub fn App(comptime ClientApp: type) type {
 
         pub fn run() void {
             host = Application.init(std.heap.wasm_allocator);
+            host.multiverse = Multiverse.init(&host);
             client = ClientApp.init(&host);
-            host.root_widget = client.rootWidget();
             js.event_handler = host.eventHandler();
             host.render();
         }

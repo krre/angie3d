@@ -8,14 +8,15 @@ const Pos2D = geometry.Pos2D;
 const Size2D = geometry.Size2D;
 const EventHandler = @import("EventHandler.zig");
 const Renderer = @import("../gfx/Renderer.zig");
+const Multiverse = @import("../ui/Multiverse.zig");
 
 const Application = @This();
 
 allocator: Allocator,
 renderer: Renderer,
-root_widget: ?*Widget = null,
 size: Size2D = .{ .width = 0, .height = 0 },
 event_handler: EventHandler = undefined,
+multiverse: Multiverse = undefined,
 
 pub fn init(allocator: Allocator) Application {
     return Application{
@@ -49,9 +50,7 @@ pub fn setTitle(self: *Application, title: []const u8) void {
 }
 
 pub fn render(self: *Application) void {
-    if (self.root_widget) |value| {
-        self.renderer.render(value);
-    }
+    _ = self;
 }
 
 pub fn resize(ctx: *anyopaque, size: Size2D) void {
