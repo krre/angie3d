@@ -1,3 +1,6 @@
+const std = @import("std");
+const ArrayList = std.ArrayList;
+const Allocator = std.mem.Allocator;
 const Universe = @import("Universe.zig");
 
 pub const View = struct {
@@ -22,15 +25,23 @@ pub const SplitView = struct {
     };
 
     orientation: Orientation,
+    views: ArrayList(AnyView),
 
     pub fn init(orientation: Orientation) SplitView {
         return SplitView{
             .orientation = orientation,
+            .views = ArrayList(AnyView).empty,
         };
     }
 
+    pub fn addView(self: *SplitView, allocator: Allocator, view: AnyView) void {
+        self.views.append(allocator, view);
+    }
+
     pub fn update(self: *SplitView) void {
-        _ = self;
+        for (self.views) |view| {
+            view.update();
+        }
     }
 };
 
