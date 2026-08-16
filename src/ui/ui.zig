@@ -8,6 +8,11 @@ pub const Size2D = geometry.Size2D;
 pub const Pos3D = geometry.Pos3D;
 pub const Size3D = geometry.Size3D;
 
+const view = @import("view.zig");
+pub const View = view.View;
+pub const SplitView = view.SplitView;
+pub const AnyView = view.AnyView;
+
 pub const Color = @import("Color.zig");
 pub const Multiverse = @import("Multiverse.zig");
 pub const Universe = @import("Universe.zig");
