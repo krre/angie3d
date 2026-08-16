@@ -1,4 +1,14 @@
+const Universe = @import("Universe.zig");
+
 pub const View = struct {
+    universe: *Universe,
+
+    pub fn init(universe: *Universe) View {
+        return View{
+            .universe = universe,
+        };
+    }
+
     pub fn update(self: *View) void {
         _ = self;
     }
