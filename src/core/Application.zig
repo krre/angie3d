@@ -56,6 +56,7 @@ pub fn render(self: *Application) void {
 pub fn resize(ctx: *anyopaque, size: Size2D) void {
     const app: *Application = @ptrCast(@alignCast(ctx));
     app.size = size;
+    app.multiverse.resize(size);
     app.render();
 }
 

@@ -2,6 +2,7 @@ const std = @import("std");
 const ArrayList = std.ArrayList;
 const Allocator = std.mem.Allocator;
 const Universe = @import("Universe.zig");
+const Size2D = @import("geometry.zig").Size2D;
 
 pub const View = struct {
     universe: *Universe,
@@ -10,6 +11,11 @@ pub const View = struct {
         return View{
             .universe = universe,
         };
+    }
+
+    pub fn resize(self: *View, size: Size2D) void {
+        _ = self;
+        _ = size;
     }
 
     pub fn update(self: *View) void {
@@ -38,6 +44,12 @@ pub const SplitView = struct {
         self.views.append(allocator, view);
     }
 
+    pub fn resize(self: *SplitView, size: Size2D) void {
+        for (self.views.items) |*view| {
+            view.resize(size);
+        }
+    }
+
     pub fn update(self: *SplitView) void {
         for (self.views) |view| {
             view.update();
@@ -48,6 +60,12 @@ pub const SplitView = struct {
 pub const AnyView = union(enum) {
     view: View,
     split_view: SplitView,
+
+    pub fn resize(self: *AnyView, size: Size2D) void {
+        switch (self.*) {
+            inline else => |*v| v.resize(size),
+        }
+    }
 
     pub fn update(self: *AnyView) void {
         switch (self.*) {
