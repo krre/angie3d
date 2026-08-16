@@ -15,6 +15,20 @@ pub const View = struct {
 };
 
 pub const SplitView = struct {
+    const Orientation = enum {
+        Horizontal,
+        Vertical,
+        Layer,
+    };
+
+    orientation: Orientation,
+
+    pub fn init(orientation: Orientation) SplitView {
+        return SplitView{
+            .orientation = orientation,
+        };
+    }
+
     pub fn update(self: *SplitView) void {
         _ = self;
     }
