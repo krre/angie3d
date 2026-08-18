@@ -24,6 +24,12 @@ pub fn resize(self: *Multiverse, size: Size2D) void {
     }
 }
 
+pub fn render(self: *Multiverse) void {
+    if (self.view) |*v| {
+        v.render();
+    }
+}
+
 pub fn update(self: *Multiverse) void {
     if (self.view) |*v| {
         v.update();

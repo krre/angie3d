@@ -50,7 +50,8 @@ pub fn setTitle(self: *Application, title: []const u8) void {
 }
 
 pub fn render(self: *Application) void {
-    _ = self;
+    self.renderer.clear();
+    self.multiverse.render();
 }
 
 pub fn resize(ctx: *anyopaque, size: Size2D) void {

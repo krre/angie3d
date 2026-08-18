@@ -18,6 +18,10 @@ pub const View = struct {
         _ = size;
     }
 
+    pub fn render(self: *View) void {
+        _ = self;
+    }
+
     pub fn update(self: *View) void {
         _ = self;
     }
@@ -50,8 +54,14 @@ pub const SplitView = struct {
         }
     }
 
+    pub fn render(self: *SplitView) void {
+        for (self.views.items) |*view| {
+            view.render();
+        }
+    }
+
     pub fn update(self: *SplitView) void {
-        for (self.views) |view| {
+        for (self.views) |*view| {
             view.update();
         }
     }
@@ -64,6 +74,12 @@ pub const AnyView = union(enum) {
     pub fn resize(self: *AnyView, size: Size2D) void {
         switch (self.*) {
             inline else => |*v| v.resize(size),
+        }
+    }
+
+    pub fn render(self: *AnyView) void {
+        switch (self.*) {
+            inline else => |*v| v.render(),
         }
     }
 
