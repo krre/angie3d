@@ -15,10 +15,10 @@ pub fn App(comptime ClientApp: type) type {
         var host: Application = undefined;
         var client: ClientApp = undefined;
 
-        pub fn run() void {
+        pub fn run() !void {
             host = Application.init(std.heap.wasm_allocator);
             host.multiverse = Multiverse.init();
-            client = ClientApp.init(&host);
+            client = try ClientApp.init(&host);
             js.event_handler = host.eventHandler();
             host.render();
         }
@@ -26,5 +26,7 @@ pub fn App(comptime ClientApp: type) type {
 }
 
 pub fn runApp(comptime ClientApp: type) void {
-    App(ClientApp).run();
+    App(ClientApp).run() catch |err| {
+        console.err("Application error: {}\n", .{err});
+    };
 }

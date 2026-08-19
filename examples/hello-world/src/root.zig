@@ -8,19 +8,15 @@ const Universe = angie3d.ui.Universe;
 const HelloWorld = struct {
     universe: *Universe,
 
-    pub fn init(app: *Application) HelloWorld {
+    pub fn init(app: *Application) !HelloWorld {
         app.setTitle("Hello World!");
+        const universe = try app.allocator.create(Universe);
 
-        const universe = app.allocator.create(Universe) catch |err| {
-            switch (err) {
-                error.OutOfMemory => @panic("Out of memory to create Universe"),
-            }
-        };
-
-        const view = View{
-            .universe = universe,
-        };
-        app.multiverse.setView(.{ .view = view });
+        app.multiverse.setView(.{
+            .view = View{
+                .universe = universe,
+            },
+        });
 
         return HelloWorld{
             .universe = universe,
