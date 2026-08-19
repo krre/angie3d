@@ -5,11 +5,11 @@ const Application = angie3d.core.Application;
 const View = angie3d.ui.View;
 const Universe = angie3d.ui.Universe;
 
-const HelloWorld = struct {
+const HelloWorldExample = struct {
     universe: *Universe,
 
-    pub fn init(app: *Application) !HelloWorld {
-        app.setTitle("Hello World!");
+    pub fn init(app: *Application) !HelloWorldExample {
+        app.setTitle("Hello World Example");
         const universe = try app.allocator.create(Universe);
 
         app.multiverse.setView(.{
@@ -18,12 +18,12 @@ const HelloWorld = struct {
             },
         });
 
-        return HelloWorld{
+        return HelloWorldExample{
             .universe = universe,
         };
     }
 };
 
 export fn start() void {
-    angie3d.runApp(HelloWorld);
+    angie3d.runApp(HelloWorldExample);
 }

@@ -28,7 +28,7 @@ pub const View = struct {
 };
 
 pub const SplitView = struct {
-    const Orientation = enum {
+    pub const Orientation = enum {
         Horizontal,
         Vertical,
         Layer,
@@ -44,8 +44,8 @@ pub const SplitView = struct {
         };
     }
 
-    pub fn addView(self: *SplitView, allocator: Allocator, view: AnyView) void {
-        self.views.append(allocator, view);
+    pub fn addView(self: *SplitView, allocator: Allocator, view: AnyView) !void {
+        try self.views.append(allocator, view);
     }
 
     pub fn resize(self: *SplitView, size: Size2D) void {

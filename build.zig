@@ -39,13 +39,20 @@ pub fn build(b: *std.Build) void {
         "Build all examples",
     );
 
-    addExample(
-        b,
+    const example_names = comptime [_][]const u8{
         "hello-world",
-        optimize,
-        mod,
-        examples_step,
-    );
+        "splitview",
+    };
+
+    inline for (example_names) |example| {
+        addExample(
+            b,
+            example,
+            optimize,
+            mod,
+            examples_step,
+        );
+    }
 }
 
 fn addExample(
