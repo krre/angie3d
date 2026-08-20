@@ -13,13 +13,8 @@ const SplitViewExample = struct {
         app.setTitle("SplitView Example");
         const universe = try app.allocator.create(Universe);
 
-        const view_left = View{
-            .universe = universe,
-        };
-
-        const view_right = View{
-            .universe = universe,
-        };
+        const view_left = View.init(universe);
+        const view_right = View.init(universe);
 
         var split_view = SplitView.init(SplitView.Orientation.Horizontal);
         try split_view.addView(app.allocator, .{ .view = view_left });

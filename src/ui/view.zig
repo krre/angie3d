@@ -6,16 +6,17 @@ const Size2D = @import("geometry.zig").Size2D;
 
 pub const View = struct {
     universe: *Universe,
+    size: Size2D,
 
     pub fn init(universe: *Universe) View {
         return View{
             .universe = universe,
+            .size = Size2D.zero,
         };
     }
 
     pub fn resize(self: *View, size: Size2D) void {
-        _ = self;
-        _ = size;
+        self.size = size;
     }
 
     pub fn render(self: *View) void {
@@ -36,11 +37,13 @@ pub const SplitView = struct {
 
     orientation: Orientation,
     views: ArrayList(AnyView),
+    size: Size2D,
 
     pub fn init(orientation: Orientation) SplitView {
         return SplitView{
             .orientation = orientation,
             .views = ArrayList(AnyView).empty,
+            .size = Size2D.zero,
         };
     }
 
@@ -49,8 +52,18 @@ pub const SplitView = struct {
     }
 
     pub fn resize(self: *SplitView, size: Size2D) void {
+        self.size = size;
+
         for (self.views.items) |*view| {
-            view.resize(size);
+            var view_size = size;
+
+            if (self.orientation == Orientation.Horizontal) {
+                view_size.width = size.width / self.views.items.len;
+            } else if (self.orientation == Orientation.Vertical) {
+                view_size.height = size.height / self.views.items.len;
+            }
+
+            view.resize(view_size);
         }
     }
 

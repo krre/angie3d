@@ -13,9 +13,7 @@ const HelloWorldExample = struct {
         const universe = try app.allocator.create(Universe);
 
         app.multiverse.setView(.{
-            .view = View{
-                .universe = universe,
-            },
+            .view = View.init(universe),
         });
 
         return HelloWorldExample{
