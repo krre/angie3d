@@ -9,6 +9,7 @@ pub const gfx = @import("gfx/gfx.zig");
 const std = @import("std");
 const Application = core.Application;
 const Multiverse = ui.Multiverse;
+const Size2D = ui.Size2D;
 
 pub fn App(comptime ClientApp: type) type {
     return struct {
@@ -20,7 +21,7 @@ pub fn App(comptime ClientApp: type) type {
             host.multiverse = Multiverse.init();
             client = try ClientApp.init(&host);
             js.event_handler = host.eventHandler();
-            host.render();
+            Application.resize(&host, Size2D{ .width = js.windowWidth(), .height = js.windowHeight() });
         }
     };
 }
