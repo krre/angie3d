@@ -104,31 +104,31 @@ pub const AnyView = union(enum) {
 
     pub fn getPos(self: *AnyView) Pos2D {
         return switch (self.*) {
-            inline else => |*v| v.pos,
+            inline else => |*view| view.pos,
         };
     }
 
     pub fn resize(self: *AnyView, size: Size2D) void {
         switch (self.*) {
-            inline else => |*v| v.resize(size),
+            inline else => |*view| view.resize(size),
         }
     }
 
     pub fn move(self: *AnyView, pos: Pos2D) void {
         switch (self.*) {
-            inline else => |*v| v.move(pos),
+            inline else => |*view| view.move(pos),
         }
     }
 
     pub fn render(self: *AnyView) void {
         switch (self.*) {
-            inline else => |*v| v.render(),
+            inline else => |*view| view.render(),
         }
     }
 
     pub fn update(self: *AnyView) void {
         switch (self.*) {
-            inline else => |*v| v.update(),
+            inline else => |*view| view.update(),
         }
     }
 };
