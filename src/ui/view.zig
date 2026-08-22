@@ -37,18 +37,18 @@ pub const View = struct {
 };
 
 pub const SplitView = struct {
-    pub const Orientation = enum {
-        Horizontal,
-        Vertical,
-        Layer,
+    pub const Direction = enum {
+        horizontal,
+        vertical,
+        layer,
     };
 
-    orientation: Orientation,
+    orientation: Direction,
     views: ArrayList(AnyView),
     size: Size2D,
     pos: Pos2D,
 
-    pub fn init(orientation: Orientation) SplitView {
+    pub fn init(orientation: Direction) SplitView {
         return SplitView{
             .orientation = orientation,
             .views = ArrayList(AnyView).empty,
@@ -68,10 +68,10 @@ pub const SplitView = struct {
             var view_size = size;
             var view_pos = view.getPos();
 
-            if (self.orientation == Orientation.Horizontal) {
+            if (self.orientation == Direction.horizontal) {
                 view_size.width = size.width / self.views.items.len;
                 view_pos.x = @as(i32, @intCast(view_size.width * i));
-            } else if (self.orientation == Orientation.Vertical) {
+            } else if (self.orientation == Direction.vertical) {
                 view_size.height = size.height / self.views.items.len;
                 view_pos.x = @as(i32, @intCast(view_size.height * i));
             }
