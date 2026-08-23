@@ -19,6 +19,10 @@ pub const View = struct {
         };
     }
 
+    pub fn deinit(self: *SplitView) void {
+        _ = self;
+    }
+
     pub fn resize(self: *View, size: Size2D) void {
         self.size = size;
     }
@@ -55,6 +59,14 @@ pub const SplitView = struct {
             .size = Size2D.zero,
             .pos = Pos2D.zero,
         };
+    }
+
+    pub fn deinit(self: *SplitView) void {
+        for (self.views.items) |view| {
+            view.deinit();
+        }
+
+        self.views.deinit();
     }
 
     pub fn addView(self: *SplitView, allocator: Allocator, view: AnyView) !void {
@@ -101,6 +113,12 @@ pub const SplitView = struct {
 pub const AnyView = union(enum) {
     view: View,
     split_view: SplitView,
+
+    pub fn deinit(self: *AnyView) void {
+        switch (self.*) {
+            inline else => |*view| view.deinit(),
+        }
+    }
 
     pub fn getPos(self: *AnyView) Pos2D {
         return switch (self.*) {
