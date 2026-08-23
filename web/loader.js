@@ -161,6 +161,15 @@ async function wasmInit() {
         const renderPassEncoder = commandEncoder.beginRenderPass(descriptor);
         return saveObject(renderPassEncoder);
       },
+      renderPassSetViewport: (renderPassId, x, y, width, height, minDepth, maxDepth) => {
+        const renderPass = objects[renderPassId];
+        renderPass.setViewport(x, y, width, height, minDepth, maxDepth);
+      },
+      renderPassSetScissorRect: (renderPassId, x, y, width, height) => {
+        const renderPass = objects[renderPassId];
+        console.log(x, y, width, height)
+        renderPass.setScissorRect(x, y, width, height);
+      },
       renderPassEnd: (renderPassId) => {
         const renderPass = objects[renderPassId];
         renderPass.end();

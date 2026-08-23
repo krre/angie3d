@@ -66,6 +66,8 @@ pub extern fn queueSubmit(id: Id) void;
 pub extern fn renderPassColorAttachment(view: Id, load_op: u8, store_op: u8, color_value: Id) Id;
 pub extern fn renderPassDescriptor() Id;
 pub extern fn addRenderPassColorAttachment(id: Id, attachment_id: Id) void;
+pub extern fn renderPassSetViewport(id: Id, x: f32, y: f32, width: f32, height: f32, minDepth: f32, maxDepth: f32) void;
+pub extern fn renderPassSetScissorRect(id: Id, x: u32, y: u32, width: u32, height: u32) void;
 pub extern fn renderPassEnd(id: Id) void;
 pub extern fn destroyTexture(id: Id) void;
 pub extern fn textureCreateView(id: Id) Id;
