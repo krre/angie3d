@@ -6,7 +6,6 @@ const geometry = @import("../ui/geometry.zig");
 const Widget = @import("../ui/widget/widget.zig").Widget;
 const Pos2D = geometry.Pos2D;
 const Size2D = geometry.Size2D;
-const EventHandler = @import("EventHandler.zig");
 const Renderer = @import("../gfx/Renderer.zig");
 const Multiverse = @import("../ui/Multiverse.zig");
 
@@ -14,34 +13,14 @@ const Application = @This();
 
 allocator: Allocator,
 renderer: Renderer,
-size: Size2D = .{ .width = 0, .height = 0 },
-event_handler: EventHandler = undefined,
+size: Size2D = Size2D.zero,
 multiverse: Multiverse = undefined,
 
 pub fn init(allocator: Allocator) Application {
     return Application{
         .allocator = allocator,
         .renderer = Renderer.init(),
-        .event_handler = EventHandler{
-            .ptr = undefined,
-            .vtable = &.{
-                .resize = resize,
-                .mouseMove = mouseMove,
-                .mouseClick = mouseClick,
-                .mouseDoubleClick = mouseDoubleClick,
-                .mouseDown = mouseDown,
-                .mouseUp = mouseUp,
-                .mouseWheel = mouseWheel,
-                .keyDown = keyDown,
-                .keyUp = keyUp,
-            },
-        },
     };
-}
-
-pub fn eventHandler(self: *Application) *EventHandler {
-    self.event_handler.ptr = self;
-    return &self.event_handler;
 }
 
 pub fn setTitle(self: *Application, title: []const u8) void {
@@ -54,60 +33,51 @@ pub fn render(self: *Application) void {
     self.multiverse.render();
 }
 
-pub fn resize(ctx: *anyopaque, size: Size2D) void {
-    const app: *Application = @ptrCast(@alignCast(ctx));
-    app.size = size;
-    app.multiverse.resize(size);
-    app.render();
+pub fn resize(self: *Application, size: Size2D) void {
+    self.size = size;
+    self.multiverse.resize(size);
+    self.render();
 }
 
-pub fn mouseMove(ctx: *anyopaque, pos: Pos2D) void {
-    const app: *Application = @ptrCast(@alignCast(ctx));
+pub fn mouseMove(self: *Application, pos: Pos2D) void {
     _ = pos;
-    app.render();
+    self.render();
 }
 
-pub fn mouseClick(ctx: *anyopaque, pos: Pos2D) void {
-    const app: *Application = @ptrCast(@alignCast(ctx));
+pub fn mouseClick(self: *Application, pos: Pos2D) void {
     _ = pos;
-    app.render();
+    self.render();
 }
 
-pub fn mouseDoubleClick(ctx: *anyopaque, pos: Pos2D) void {
-    const app: *Application = @ptrCast(@alignCast(ctx));
+pub fn mouseDoubleClick(self: *Application, pos: Pos2D) void {
     _ = pos;
-    app.render();
+    self.render();
 }
 
-pub fn mouseDown(ctx: *anyopaque, pos: Pos2D, button: u8) void {
-    const app: *Application = @ptrCast(@alignCast(ctx));
+pub fn mouseDown(self: *Application, pos: Pos2D, button: u8) void {
     _ = pos;
     _ = button;
-    app.render();
+    self.render();
 }
 
-pub fn mouseUp(ctx: *anyopaque, pos: Pos2D, button: u8) void {
-    const app: *Application = @ptrCast(@alignCast(ctx));
+pub fn mouseUp(self: *Application, pos: Pos2D, button: u8) void {
     _ = pos;
     _ = button;
-    app.render();
+    self.render();
 }
 
-pub fn mouseWheel(ctx: *anyopaque, pos: Pos2D, delta_y: i8) void {
-    const app: *Application = @ptrCast(@alignCast(ctx));
+pub fn mouseWheel(self: *Application, pos: Pos2D, delta_y: i8) void {
     _ = pos;
     _ = delta_y;
-    app.render();
+    self.render();
 }
 
-pub fn keyDown(ctx: *anyopaque, code: u32) void {
-    const app: *Application = @ptrCast(@alignCast(ctx));
+pub fn keyDown(self: *Application, code: u32) void {
     _ = code;
-    app.render();
+    self.render();
 }
 
-pub fn keyUp(ctx: *anyopaque, code: u32) void {
-    const app: *Application = @ptrCast(@alignCast(ctx));
+pub fn keyUp(self: *Application, code: u32) void {
     _ = code;
-    app.render();
+    self.render();
 }

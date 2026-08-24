@@ -20,7 +20,7 @@ pub fn App(comptime ClientApp: type) type {
             host = Application.init(std.heap.wasm_allocator);
             host.multiverse = Multiverse.init();
             client = try ClientApp.init(&host);
-            js.event_handler = host.eventHandler();
+            js.app = &host;
         }
     };
 }

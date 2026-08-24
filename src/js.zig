@@ -1,43 +1,43 @@
-const EventHandler = @import("core/EventHandler.zig");
+const Application = @import("core/Application.zig");
 const Id = @import("types.zig").Id;
 
-pub var event_handler: *EventHandler = undefined;
+pub var app: *Application = undefined;
 
 // Events
 export fn resize(width: u32, height: u32) void {
-    event_handler.vtable.resize(event_handler.ptr, .{ .width = width, .height = height });
+    app.resize(.{ .width = width, .height = height });
 }
 
 export fn mouseMove(x: i32, y: i32) void {
-    event_handler.vtable.mouseMove(event_handler.ptr, .{ .x = x, .y = y });
+    app.mouseMove(.{ .x = x, .y = y });
 }
 
 export fn mouseClick(x: i32, y: i32) void {
-    event_handler.vtable.mouseClick(event_handler.ptr, .{ .x = x, .y = y });
+    app.mouseClick(.{ .x = x, .y = y });
 }
 
 export fn mouseDoubleClick(x: i32, y: i32) void {
-    event_handler.vtable.mouseDoubleClick(event_handler.ptr, .{ .x = x, .y = y });
+    app.mouseDoubleClick(.{ .x = x, .y = y });
 }
 
 export fn mouseDown(x: i32, y: i32, button: u8) void {
-    event_handler.vtable.mouseDown(event_handler.ptr, .{ .x = x, .y = y }, button);
+    app.mouseDown(.{ .x = x, .y = y }, button);
 }
 
 export fn mouseUp(x: i32, y: i32, button: u8) void {
-    event_handler.vtable.mouseUp(event_handler.ptr, .{ .x = x, .y = y }, button);
+    app.mouseUp(.{ .x = x, .y = y }, button);
 }
 
 export fn mouseWheel(x: i32, y: i32, delta_y: i8) void {
-    event_handler.vtable.mouseWheel(event_handler.ptr, .{ .x = x, .y = y }, delta_y);
+    app.mouseWheel(.{ .x = x, .y = y }, delta_y);
 }
 
 export fn keyDown(code: u32) void {
-    event_handler.vtable.keyDown(event_handler.ptr, code);
+    app.keyDown(code);
 }
 
 export fn keyUp(code: u32) void {
-    event_handler.vtable.keyUp(event_handler.ptr, code);
+    app.keyUp(code);
 }
 
 // Common
