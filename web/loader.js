@@ -84,12 +84,6 @@ async function wasmInit() {
       setTitle: (ptr, len) => {
         window.document.title = decodeUtf8(ptr, len);
       },
-      windowWidth: () => {
-        return window.innerWidth;
-      },
-      windowHeight: () => {
-        return window.innerHeight;
-      },
       destroy: (id) => {
         objects[id].destroy();
         delete objects[id];
