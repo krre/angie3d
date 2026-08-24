@@ -47,6 +47,10 @@ pub extern fn remove(id: Id) void;
 // Window
 pub extern fn setTitle(title: [*]const u8, length: usize) void;
 
+// Console
+pub extern fn consoleLog(message: [*]const u8, length: usize) void;
+pub extern fn consoleErr(message: [*]const u8, length: usize) void;
+
 // WebGPU
 pub extern fn gpu() Id;
 pub extern fn adapter() Id;
