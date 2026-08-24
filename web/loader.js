@@ -30,7 +30,7 @@ function decodeUtf8(ptr, len) {
   return decoder.decode(bytes);
 }
 
-async function gpuInit() {
+async function initGpu() {
   const gpu = navigator.gpu;
 
   if (!gpu) {
@@ -72,7 +72,7 @@ async function gpuInit() {
   });
 }
 
-async function wasmInit() {
+async function initWasm() {
   const imports = {
     env: {
       consoleLog: (ptr, len) => {
@@ -196,7 +196,7 @@ async function wasmInit() {
   wasm = await WebAssembly.instantiateStreaming(fetch("lib.wasm"), imports);
 }
 
-function eventsInit() {
+function initEvents() {
   const exports = wasm.instance.exports;
 
   observer = new ResizeObserver(entries => {
@@ -266,9 +266,9 @@ function showError(message) {
 
 async function init() {
   try {
-    await gpuInit();
-    await wasmInit();
-    eventsInit();
+    await initGpu();
+    await initWasm();
+    initEvents();
     wasm.instance.exports.start();
   } catch (e) {
     showError(e.message || String(e));
