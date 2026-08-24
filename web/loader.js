@@ -1,4 +1,7 @@
 let wasm;
+let device;
+let canvas;
+let observer;
 
 const objects = {};
 let objectIdCounter = 0;
@@ -44,10 +47,10 @@ async function gpuInit() {
 
   adapterId = saveObject(adapter);
 
-  const device = await adapter.requestDevice();
+  device = await adapter.requestDevice();
   deviceId = saveObject(device);
 
-  const canvas = document.querySelector("canvas");
+  canvas = document.querySelector("canvas");
 
   if (!canvas) {
     throw new Error("Canvas not found");
@@ -167,7 +170,6 @@ async function wasmInit() {
       },
       renderPassSetScissorRect: (renderPassId, x, y, width, height) => {
         const renderPass = objects[renderPassId];
-        console.log(x, y, width, height)
         renderPass.setScissorRect(x, y, width, height);
       },
       renderPassEnd: (renderPassId) => {
@@ -203,9 +205,21 @@ async function wasmInit() {
 function eventsInit() {
   const exports = wasm.instance.exports;
 
-  window.addEventListener("resize", function () {
-    exports.resize(window.innerWidth, window.innerHeight);
+  observer = new ResizeObserver(entries => {
+    for (const entry of entries) {
+      const width = entry.contentBoxSize[0].inlineSize;
+      const height = entry.contentBoxSize[0].blockSize;
+
+      const canvas = entry.target;
+
+      canvas.width = Math.max(1, Math.min(width, device.limits.maxTextureDimension2D));
+      canvas.height = Math.max(1, Math.min(height, device.limits.maxTextureDimension2D));
+
+      exports.resize("resize", width, height);
+    }
   });
+
+  observer.observe(canvas);
 
   window.addEventListener("mousemove", function (event) {
     exports.mouseMove(event.clientX, event.clientY);

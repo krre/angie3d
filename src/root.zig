@@ -21,7 +21,6 @@ pub fn App(comptime ClientApp: type) type {
             host.multiverse = Multiverse.init();
             client = try ClientApp.init(&host);
             js.event_handler = host.eventHandler();
-            Application.resize(&host, Size2D{ .width = js.windowWidth(), .height = js.windowHeight() });
         }
     };
 }
