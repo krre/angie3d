@@ -14,8 +14,8 @@ pub const View = struct {
     pub fn init(scene: *Node) View {
         return View{
             .scene = scene,
-            .size = Size2D.zero,
-            .pos = Pos2D.zero,
+            .size = .{},
+            .pos = .{},
         };
     }
 
@@ -56,8 +56,8 @@ pub const SplitView = struct {
         return SplitView{
             .orientation = orientation,
             .views = ArrayList(AnyView).empty,
-            .size = Size2D.zero,
-            .pos = Pos2D.zero,
+            .size = .{},
+            .pos = .{},
         };
     }
 

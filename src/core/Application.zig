@@ -13,7 +13,7 @@ const Application = @This();
 
 allocator: Allocator,
 renderer: Renderer,
-size: Size2D = Size2D.zero,
+size: Size2D = .{},
 view: ?AnyView = null,
 
 pub fn init(allocator: Allocator) Application {
