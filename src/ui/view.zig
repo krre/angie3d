@@ -1,19 +1,19 @@
 const std = @import("std");
 const ArrayList = std.ArrayList;
 const Allocator = std.mem.Allocator;
-const Universe = @import("Universe.zig");
+const Node = @import("node/node.zig").Node;
 const geometry = @import("geometry.zig");
 const Size2D = geometry.Size2D;
 const Pos2D = geometry.Pos2D;
 
 pub const View = struct {
-    universe: *Universe,
+    scene: *Node,
     size: Size2D,
     pos: Pos2D,
 
-    pub fn init(universe: *Universe) View {
+    pub fn init(scene: *Node) View {
         return View{
-            .universe = universe,
+            .scene = scene,
             .size = Size2D.zero,
             .pos = Pos2D.zero,
         };

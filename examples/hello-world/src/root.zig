@@ -3,22 +3,20 @@ const Widget = angie3d.ui.widget.Widget;
 const Rectangle = angie3d.ui.widget.Rectangle;
 const Application = angie3d.core.Application;
 const View = angie3d.ui.View;
-const Universe = angie3d.ui.Universe;
+const Node = angie3d.ui.node.Node;
 
 const HelloWorldExample = struct {
-    universe: *Universe,
+    scene: Node,
 
     pub fn init(app: *Application) !HelloWorldExample {
         app.setTitle("Hello World Example");
-        const universe = try app.allocator.create(Universe);
+        var helloWorldExample = HelloWorldExample{ .scene = Node.init() };
 
         app.setView(.{
-            .view = View.init(universe),
+            .view = View.init(&helloWorldExample.scene),
         });
 
-        return HelloWorldExample{
-            .universe = universe,
-        };
+        return helloWorldExample;
     }
 };
 
