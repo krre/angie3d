@@ -7,14 +7,14 @@ const Widget = @import("../ui/widget/widget.zig").Widget;
 const Pos2D = geometry.Pos2D;
 const Size2D = geometry.Size2D;
 const Renderer = @import("../gfx/Renderer.zig");
-const Multiverse = @import("../ui/Multiverse.zig");
+const AnyView = @import("../ui/view.zig").AnyView;
 
 const Application = @This();
 
 allocator: Allocator,
 renderer: Renderer,
 size: Size2D = Size2D.zero,
-multiverse: Multiverse = undefined,
+view: ?AnyView = null,
 
 pub fn init(allocator: Allocator) Application {
     return Application{
@@ -28,14 +28,21 @@ pub fn setTitle(self: *Application, title: []const u8) void {
     js.setTitle(title.ptr, title.len);
 }
 
+pub fn setView(self: *Application, view: AnyView) void {
+    self.view = view;
+}
+
 pub fn render(self: *Application) void {
     self.renderer.clear();
-    self.multiverse.render();
 }
 
 pub fn resize(self: *Application, size: Size2D) void {
     self.size = size;
-    self.multiverse.resize(size);
+
+    if (self.view) |*view| {
+        view.resize(size);
+    }
+
     self.render();
 }
 

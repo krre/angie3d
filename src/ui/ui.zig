@@ -14,5 +14,4 @@ pub const SplitView = view.SplitView;
 pub const AnyView = view.AnyView;
 
 pub const Color = @import("Color.zig");
-pub const Multiverse = @import("Multiverse.zig");
 pub const Universe = @import("Universe.zig");

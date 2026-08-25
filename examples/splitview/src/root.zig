@@ -20,7 +20,7 @@ const SplitViewExample = struct {
         try split_view.addView(app.allocator, .{ .view = view_left });
         try split_view.addView(app.allocator, .{ .view = view_right });
 
-        app.multiverse.setView(.{ .split_view = split_view });
+        app.setView(.{ .split_view = split_view });
 
         return SplitViewExample{
             .universe = universe,
