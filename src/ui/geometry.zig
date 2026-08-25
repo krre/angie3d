@@ -25,3 +25,10 @@ pub const Size3D = struct {
     height: f32 = 0,
     depth: f32 = 0,
 };
+
+pub const Quaternion = struct {
+    x: f32 = 0,
+    y: f32 = 0,
+    z: f32 = 0,
+    w: f32 = 1,
+};
