@@ -1,9 +1,11 @@
 const Node = @import("../node/node.zig").Node;
-const Pos3D = @import("../geometry.zig").Pos3D;
+const geometry = @import("../geometry.zig");
+const Transform = geometry.Transform;
+const Pos3D = geometry.Pos3D;
 
 pub const Spatial = struct {
     node: Node,
-    pos: Pos3D = .{ .x = 0, .y = 0, .z = 0 },
+    transform: Transform = .{},
 };
 
 pub fn init() Spatial {

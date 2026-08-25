@@ -10,6 +10,8 @@ pub const Pos3D = geometry.Pos3D;
 pub const Vec3D = geometry.Vec3D;
 pub const Size3D = geometry.Size3D;
 pub const Quaternion = geometry.Quaternion;
+pub const Mat4 = geometry.Mat4;
+pub const Transform = geometry.Transform;
 
 const view = @import("view.zig");
 pub const View = view.View;
