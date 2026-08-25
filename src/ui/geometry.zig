@@ -14,6 +14,12 @@ pub const Pos3D = struct {
     z: f32 = 0,
 };
 
+pub const Vec3D = struct {
+    x: f32 = 0,
+    y: f32 = 0,
+    z: f32 = 0,
+};
+
 pub const Size3D = struct {
     width: f32 = 0,
     height: f32 = 0,
