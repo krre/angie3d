@@ -1,4 +1,5 @@
 pub const node = @import("node/node.zig");
+pub const spatial = @import("spatial/spatial.zig");
 pub const widget = @import("widget/widget.zig");
 pub const layout = @import("layout/layout.zig");
 

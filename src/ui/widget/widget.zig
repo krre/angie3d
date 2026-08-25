@@ -3,13 +3,11 @@ pub const Rectangle = @import("Rectangle.zig");
 pub const Border = @import("Border.zig");
 
 const geometry = @import("../geometry.zig");
-const Pos3D = geometry.Pos3D;
 const Size3D = geometry.Size3D;
-const Node = @import("../node/node.zig").Node;
+const Spatial = @import("../spatial/spatial.zig").Spatial;
 
 pub const Widget = struct {
-    node: Node,
-    pos: Pos3D = .{ .x = 0, .y = 0, .z = 0 },
+    spatial: Spatial,
     size: Size3D = .{ .width = 0, .height = 0, .depth = 0 },
     vtable: *const VTable,
 
@@ -19,17 +17,13 @@ pub const Widget = struct {
 
     pub fn init(vtable: *const VTable) Widget {
         return Widget{
-            .node = Node.init(),
+            .spatial = Spatial.init(),
             .vtable = vtable,
         };
     }
 
-    pub fn fromNode(node: *Node) *Widget {
-        return @fieldParentPtr("node", node);
-    }
-
-    pub fn move(self: *Widget, pos: Pos3D) void {
-        self.pos = pos;
+    pub fn fromSpatial(spatial: *Spatial) *Widget {
+        return @fieldParentPtr("spatial", spatial);
     }
 
     pub fn resize(self: *Widget, size: Size3D) void {
