@@ -28,3 +28,11 @@ pub fn runApp(comptime ClientApp: type) void {
         console.err("Application error: {}\n", .{err});
     };
 }
+
+test "root imports" {
+    _ = console;
+    _ = types;
+    _ = core;
+    _ = ui;
+    _ = gfx;
+}
