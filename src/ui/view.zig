@@ -161,6 +161,7 @@ test "SplitView.resize horizontal" {
 
     try split_view.addView(std.testing.allocator, .{ .view = view1 });
     try split_view.addView(std.testing.allocator, .{ .view = view2 });
+
     defer split_view.deinit(std.testing.allocator);
 
     split_view.resize(.{
@@ -176,4 +177,34 @@ test "SplitView.resize horizontal" {
 
     try std.testing.expectEqual(@as(i32, 0), split_view.views.items[0].view.pos.x);
     try std.testing.expectEqual(@as(i32, 50), split_view.views.items[1].view.pos.x);
+}
+
+test "SplitView.resize vertical" {
+    var split_view = SplitView.init(.vertical);
+
+    const view1 = View.init(undefined);
+    const view2 = View.init(undefined);
+    const view3 = View.init(undefined);
+
+    try split_view.addView(std.testing.allocator, .{ .view = view1 });
+    try split_view.addView(std.testing.allocator, .{ .view = view2 });
+    try split_view.addView(std.testing.allocator, .{ .view = view3 });
+
+    defer split_view.deinit(std.testing.allocator);
+
+    split_view.resize(.{
+        .width = 100,
+        .height = 120,
+    });
+
+    try std.testing.expectEqual(@as(u32, 100), split_view.size.width);
+    try std.testing.expectEqual(@as(u32, 120), split_view.size.height);
+
+    try std.testing.expectEqual(@as(u32, 40), split_view.views.items[0].view.size.height);
+    try std.testing.expectEqual(@as(u32, 40), split_view.views.items[1].view.size.height);
+    try std.testing.expectEqual(@as(u32, 40), split_view.views.items[2].view.size.height);
+
+    try std.testing.expectEqual(@as(i32, 0), split_view.views.items[0].view.pos.y);
+    try std.testing.expectEqual(@as(i32, 40), split_view.views.items[1].view.pos.y);
+    try std.testing.expectEqual(@as(i32, 80), split_view.views.items[2].view.pos.y);
 }
