@@ -152,3 +152,28 @@ pub const AnyView = union(enum) {
         }
     }
 };
+
+test "SplitView.resize horizontal" {
+    var split_view = SplitView.init(.horizontal);
+
+    const view1 = View.init(undefined);
+    const view2 = View.init(undefined);
+
+    try split_view.addView(std.testing.allocator, .{ .view = view1 });
+    try split_view.addView(std.testing.allocator, .{ .view = view2 });
+    defer split_view.deinit(std.testing.allocator);
+
+    split_view.resize(.{
+        .width = 100,
+        .height = 50,
+    });
+
+    try std.testing.expectEqual(@as(u32, 100), split_view.size.width);
+    try std.testing.expectEqual(@as(u32, 50), split_view.size.height);
+
+    try std.testing.expectEqual(@as(u32, 50), split_view.views.items[0].view.size.width);
+    try std.testing.expectEqual(@as(u32, 50), split_view.views.items[1].view.size.width);
+
+    try std.testing.expectEqual(@as(i32, 0), split_view.views.items[0].view.pos.x);
+    try std.testing.expectEqual(@as(i32, 50), split_view.views.items[1].view.pos.x);
+}
