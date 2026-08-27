@@ -29,10 +29,10 @@ pub fn runApp(comptime ClientApp: type) void {
     };
 }
 
-test "root imports" {
-    _ = console;
-    _ = types;
-    _ = core;
-    _ = ui;
-    _ = gfx;
+test "root reference declarations" {
+    std.testing.refAllDecls(console);
+    std.testing.refAllDecls(types);
+    std.testing.refAllDecls(core);
+    std.testing.refAllDecls(ui);
+    std.testing.refAllDecls(gfx);
 }
