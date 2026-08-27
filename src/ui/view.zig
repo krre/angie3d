@@ -86,7 +86,7 @@ pub const SplitView = struct {
                 view_pos.x = @as(i32, @intCast(view_size.width * i));
             } else if (self.orientation == Direction.vertical) {
                 view_size.height = size.height / views_count;
-                view_pos.x = @as(i32, @intCast(view_size.height * i));
+                view_pos.y = @as(i32, @intCast(view_size.height * i));
             }
 
             view.resize(view_size);
