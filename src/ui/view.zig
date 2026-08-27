@@ -105,7 +105,7 @@ pub const SplitView = struct {
     }
 
     pub fn update(self: *SplitView) void {
-        for (self.views) |*view| {
+        for (self.views.items) |*view| {
             view.update();
         }
     }
