@@ -19,7 +19,7 @@ pub const View = struct {
         };
     }
 
-    pub fn deinit(self: *SplitView) void {
+    pub fn deinit(self: *View) void {
         _ = self;
     }
 
