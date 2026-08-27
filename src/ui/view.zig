@@ -75,16 +75,17 @@ pub const SplitView = struct {
 
     pub fn resize(self: *SplitView, size: Size2D) void {
         self.size = size;
+        const views_count = @as(u32, @intCast(self.views.items.len));
 
         for (self.views.items, 0..) |*view, i| {
             var view_size = size;
             var view_pos = view.getPos();
 
             if (self.orientation == Direction.horizontal) {
-                view_size.width = size.width / self.views.items.len;
+                view_size.width = size.width / views_count;
                 view_pos.x = @as(i32, @intCast(view_size.width * i));
             } else if (self.orientation == Direction.vertical) {
-                view_size.height = size.height / self.views.items.len;
+                view_size.height = size.height / views_count;
                 view_pos.x = @as(i32, @intCast(view_size.height * i));
             }
 
