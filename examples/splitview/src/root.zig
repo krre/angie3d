@@ -16,7 +16,7 @@ const SplitViewExample = struct {
         const view_left = View.init(&splitViewExample.scene);
         const view_right = View.init(&splitViewExample.scene);
 
-        var split_view = SplitView.init(SplitView.Direction.horizontal);
+        var split_view = SplitView.init(.horizontal);
         try split_view.addView(app.allocator, .{ .view = view_left });
         try split_view.addView(app.allocator, .{ .view = view_right });
 

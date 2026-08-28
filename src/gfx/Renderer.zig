@@ -39,7 +39,7 @@ pub fn clear(self: *Renderer) void {
 
     const color = GpuColor.init(Color.gray);
 
-    const color_attachment = GpuRenderPassColorAttachment.init(texture_view, GpuLoadOp.clear, GpuStoreOp.store, color);
+    const color_attachment = GpuRenderPassColorAttachment.init(texture_view, .clear, .store, color);
     defer color_attachment.deinit();
 
     const render_pass_descriptor = GpuRenderPassDescriptor.init();
