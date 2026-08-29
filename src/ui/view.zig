@@ -155,14 +155,10 @@ pub const AnyView = union(enum) {
 
 test "SplitView.resize horizontal" {
     var split_view = SplitView.init(.horizontal);
-
-    const view1 = View.init(undefined);
-    const view2 = View.init(undefined);
-
-    try split_view.addView(std.testing.allocator, .{ .view = view1 });
-    try split_view.addView(std.testing.allocator, .{ .view = view2 });
-
     defer split_view.deinit(std.testing.allocator);
+
+    try split_view.addView(std.testing.allocator, .{ .view = View.init(undefined) });
+    try split_view.addView(std.testing.allocator, .{ .view = View.init(undefined) });
 
     split_view.resize(.{
         .width = 100,
@@ -181,16 +177,11 @@ test "SplitView.resize horizontal" {
 
 test "SplitView.resize vertical" {
     var split_view = SplitView.init(.vertical);
-
-    const view1 = View.init(undefined);
-    const view2 = View.init(undefined);
-    const view3 = View.init(undefined);
-
-    try split_view.addView(std.testing.allocator, .{ .view = view1 });
-    try split_view.addView(std.testing.allocator, .{ .view = view2 });
-    try split_view.addView(std.testing.allocator, .{ .view = view3 });
-
     defer split_view.deinit(std.testing.allocator);
+
+    try split_view.addView(std.testing.allocator, .{ .view = View.init(undefined) });
+    try split_view.addView(std.testing.allocator, .{ .view = View.init(undefined) });
+    try split_view.addView(std.testing.allocator, .{ .view = View.init(undefined) });
 
     split_view.resize(.{
         .width = 100,
