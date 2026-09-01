@@ -1,1 +1,1 @@
-pub const Id = usize;
+pub const Id = u32;

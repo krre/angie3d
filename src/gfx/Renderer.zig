@@ -3,6 +3,7 @@ const Gpu = webgpu.Gpu;
 const GpuAdapter = webgpu.GpuAdapter;
 const GpuColor = webgpu.GpuColor;
 const GpuCommandEncoder = webgpu.GpuCommandEncoder;
+const GpuCommandBuffer = webgpu.GpuCommandBuffer;
 const GpuDevice = webgpu.GpuDevice;
 const GpuRenderPassColorAttachment = webgpu.GpuRenderPassColorAttachment;
 const GpuRenderPassDescriptor = webgpu.GpuRenderPassDescriptor;
@@ -61,8 +62,7 @@ pub fn clear(self: *Renderer) void {
     const queue = self.device.queue();
     defer queue.deinit();
 
-    queue.addCommandBuffer(command_buffer);
-    queue.submit();
+    queue.submit(&[_]GpuCommandBuffer{command_buffer});
 }
 
 pub fn render(self: *Renderer, widget: *Widget) void {

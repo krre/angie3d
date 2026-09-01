@@ -16,10 +16,12 @@ pub fn deinit(self: GpuQueue) void {
     js.remove(self.id);
 }
 
-pub fn addCommandBuffer(self: GpuQueue, buffer: GpuCommandBuffer) void {
-    js.queueAddCommandBuffer(self.id, buffer.id);
-}
+pub fn submit(self: GpuQueue, command_buffers: []const GpuCommandBuffer) void {
+    var ids: [64]Id = undefined;
 
-pub fn submit(self: GpuQueue) void {
-    js.queueSubmit(self.id);
+    for (command_buffers, 0..) |cb, i| {
+        ids[i] = cb.id;
+    }
+
+    js.queueSubmit(self.id, @ptrCast(&ids), command_buffers.len);
 }

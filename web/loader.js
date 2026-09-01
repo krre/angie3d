@@ -181,14 +181,17 @@ async function initWasm() {
         queue.commandBuffers = [];
         return saveObject(queue);
       },
-      queueAddCommandBuffer: (queueId, bufferId) => {
+      queueSubmit: (queueId, commandBuffersPtr, commandBuffersLen) => {
+        const commandBufferIds = new Uint32Array(wasm.instance.exports.memory.buffer, commandBuffersPtr, commandBuffersLen);
+
         const queue = objects[queueId];
-        const commandBuffer = objects[bufferId];
-        queue.commandBuffers.push(commandBuffer);
-      },
-      queueSubmit: (queueId) => {
-        const queue = objects[queueId];
-        queue.submit(queue.commandBuffers);
+        const commandBuffers = []
+
+        for (commandBufferId of commandBufferIds) {
+          commandBuffers.push(objects[commandBufferId])
+        }
+
+        queue.submit(commandBuffers);
       },
     },
   };
