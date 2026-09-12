@@ -8,6 +8,11 @@ pub const Size2D = struct {
     height: u32 = 0,
 };
 
+pub const Rect = struct {
+    pos: Pos2D,
+    size: Size2D,
+};
+
 pub const Pos3D = struct {
     x: f32 = 0,
     y: f32 = 0,
