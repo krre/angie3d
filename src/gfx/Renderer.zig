@@ -12,6 +12,7 @@ const GpuLoadOp = webgpu.GpuLoadOp;
 const GpuStoreOp = webgpu.GpuStoreOp;
 
 const ui = @import("../ui/ui.zig");
+const AnyView = @import("../ui/view.zig").AnyView;
 const Widget = ui.widget.Widget;
 const Color = ui.Color;
 
@@ -65,7 +66,7 @@ pub fn clear(self: *Renderer) void {
     queue.submit(&[_]GpuCommandBuffer{command_buffer});
 }
 
-pub fn render(self: *Renderer, widget: *Widget) void {
-    self.clear();
-    _ = widget;
+pub fn render(self: *Renderer, view: AnyView) void {
+    _ = self;
+    _ = view;
 }

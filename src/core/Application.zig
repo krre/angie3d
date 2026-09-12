@@ -34,6 +34,10 @@ pub fn setView(self: *Application, view: AnyView) void {
 
 pub fn render(self: *Application) void {
     self.renderer.clear();
+
+    if (self.view) |view| {
+        self.renderer.render(view);
+    }
 }
 
 pub fn resize(self: *Application, size: Size2D) void {
