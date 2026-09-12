@@ -3,19 +3,18 @@ const ArrayList = std.ArrayList;
 const Allocator = std.mem.Allocator;
 const Node = @import("node/node.zig").Node;
 const geometry = @import("geometry.zig");
+const Rect = geometry.Rect;
 const Size2D = geometry.Size2D;
 const Pos2D = geometry.Pos2D;
 
 pub const View = struct {
     scene: *Node,
-    size: Size2D,
-    pos: Pos2D,
+    rect: Rect,
 
     pub fn init(scene: *Node) View {
         return View{
             .scene = scene,
-            .size = .{},
-            .pos = .{},
+            .rect = .{},
         };
     }
 
@@ -25,11 +24,11 @@ pub const View = struct {
     }
 
     pub fn resize(self: *View, size: Size2D) void {
-        self.size = size;
+        self.rect.size = size;
     }
 
     pub fn move(self: *View, pos: Pos2D) void {
-        self.pos = pos;
+        self.rect.pos = pos;
     }
 
     pub fn render(self: *View) void {
@@ -50,15 +49,13 @@ pub const SplitView = struct {
 
     orientation: Direction,
     views: ArrayList(AnyView),
-    size: Size2D,
-    pos: Pos2D,
+    rect: Rect,
 
     pub fn init(orientation: Direction) SplitView {
         return SplitView{
             .orientation = orientation,
             .views = ArrayList(AnyView).empty,
-            .size = .{},
-            .pos = .{},
+            .rect = .{},
         };
     }
 
@@ -75,7 +72,7 @@ pub const SplitView = struct {
     }
 
     pub fn resize(self: *SplitView, size: Size2D) void {
-        self.size = size;
+        self.rect.size = size;
         const views_count = @as(u32, @intCast(self.views.items.len));
 
         for (self.views.items, 0..) |*view, i| {
@@ -96,7 +93,7 @@ pub const SplitView = struct {
     }
 
     pub fn move(self: *SplitView, pos: Pos2D) void {
-        self.pos = pos;
+        self.rect.pos = pos;
     }
 
     pub fn render(self: *SplitView) void {
@@ -124,7 +121,7 @@ pub const AnyView = union(enum) {
 
     pub fn getPos(self: *AnyView) Pos2D {
         return switch (self.*) {
-            inline else => |*view| view.pos,
+            inline else => |*view| view.rect.pos,
         };
     }
 
@@ -188,14 +185,14 @@ test "SplitView.resize vertical" {
         .height = 120,
     });
 
-    try std.testing.expectEqual(@as(u32, 100), split_view.size.width);
-    try std.testing.expectEqual(@as(u32, 120), split_view.size.height);
+    try std.testing.expectEqual(@as(u32, 100), split_view.rect.size.width);
+    try std.testing.expectEqual(@as(u32, 120), split_view.rect.size.height);
 
-    try std.testing.expectEqual(@as(u32, 40), split_view.views.items[0].view.size.height);
-    try std.testing.expectEqual(@as(u32, 40), split_view.views.items[1].view.size.height);
-    try std.testing.expectEqual(@as(u32, 40), split_view.views.items[2].view.size.height);
+    try std.testing.expectEqual(@as(u32, 40), split_view.views.items[0].view.rect.size.height);
+    try std.testing.expectEqual(@as(u32, 40), split_view.views.items[1].view.rect.size.height);
+    try std.testing.expectEqual(@as(u32, 40), split_view.views.items[2].view.rect.size.height);
 
-    try std.testing.expectEqual(@as(i32, 0), split_view.views.items[0].view.pos.y);
-    try std.testing.expectEqual(@as(i32, 40), split_view.views.items[1].view.pos.y);
-    try std.testing.expectEqual(@as(i32, 80), split_view.views.items[2].view.pos.y);
+    try std.testing.expectEqual(@as(i32, 0), split_view.views.items[0].view.rect.pos.y);
+    try std.testing.expectEqual(@as(i32, 40), split_view.views.items[1].view.rect.pos.y);
+    try std.testing.expectEqual(@as(i32, 80), split_view.views.items[2].view.rect.pos.y);
 }

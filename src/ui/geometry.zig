@@ -9,8 +9,8 @@ pub const Size2D = struct {
 };
 
 pub const Rect = struct {
-    pos: Pos2D,
-    size: Size2D,
+    pos: Pos2D = .{},
+    size: Size2D = .{},
 };
 
 pub const Pos3D = struct {
