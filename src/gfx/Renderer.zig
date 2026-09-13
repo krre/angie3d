@@ -13,10 +13,22 @@ const GpuStoreOp = webgpu.GpuStoreOp;
 
 const ui = @import("../ui/ui.zig");
 const AnyView = @import("../ui/view.zig").AnyView;
-const Widget = ui.widget.Widget;
+const Node = ui.node.Node;
 const Color = ui.Color;
+const geometry = @import("../ui/geometry.zig");
+const Rect = geometry.Rect;
+const Pos2D = geometry.Pos2D;
+
+const std = @import("std");
+const ArrayList = std.ArrayList;
+const Allocator = std.mem.Allocator;
 
 pub const Renderer = @This();
+
+const RenderTarget = struct {
+    scene: *Node,
+    rect: Rect,
+};
 
 gpu: Gpu,
 adapter: GpuAdapter,
@@ -66,7 +78,28 @@ pub fn clear(self: *Renderer) void {
     queue.submit(&[_]GpuCommandBuffer{command_buffer});
 }
 
-pub fn render(self: *Renderer, view: AnyView) void {
+pub fn render(self: *Renderer, allocator: std.mem.Allocator, view: AnyView) !void {
     _ = self;
-    _ = view;
+    var render_targets = ArrayList(RenderTarget).empty;
+    try collectRenderTargets(allocator, view, .{}, &render_targets);
+}
+
+fn collectRenderTargets(allocator: std.mem.Allocator, view: AnyView, parent_pos: Pos2D, render_targets: *ArrayList(RenderTarget)) !void {
+    switch (view) {
+        .split_view => |sv| {
+            const pos: Pos2D = .{ .x = sv.rect.pos.x + parent_pos.x, .y = sv.rect.pos.y + parent_pos.y };
+
+            for (sv.views.items) |v| {
+                try collectRenderTargets(allocator, v, pos, render_targets);
+            }
+        },
+        .view => |v| {
+            const pos: Pos2D = .{ .x = v.rect.pos.x + parent_pos.x, .y = v.rect.pos.y + parent_pos.y };
+            const render_target: RenderTarget = .{
+                .rect = .{ .pos = pos, .size = v.rect.size },
+                .scene = v.scene,
+            };
+            try render_targets.append(allocator, render_target);
+        },
+    }
 }
