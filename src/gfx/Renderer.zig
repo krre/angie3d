@@ -79,9 +79,24 @@ pub fn clear(self: *Renderer) void {
 }
 
 pub fn render(self: *Renderer, allocator: std.mem.Allocator, view: AnyView) !void {
-    _ = self;
     var render_targets = ArrayList(RenderTarget).empty;
+    render_targets.deinit(allocator);
     try collectRenderTargets(allocator, view, .{}, &render_targets);
+
+    const command_buffers: []GpuCommandBuffer = try allocator.alloc(GpuCommandBuffer, render_targets.items.len);
+
+    for (render_targets.items, 0..) |render_target, i| {
+        const command_buffer = self.render_scene(render_target.rect, render_target.scene);
+        command_buffers[i] = command_buffer;
+    }
+
+    const queue = self.device.queue();
+    defer queue.deinit();
+    queue.submit(command_buffers);
+
+    for (command_buffers) |command_buffer| {
+        command_buffer.deinit();
+    }
 }
 
 fn collectRenderTargets(allocator: std.mem.Allocator, view: AnyView, parent_pos: Pos2D, render_targets: *ArrayList(RenderTarget)) !void {
@@ -102,4 +117,14 @@ fn collectRenderTargets(allocator: std.mem.Allocator, view: AnyView, parent_pos:
             try render_targets.append(allocator, render_target);
         },
     }
+}
+
+fn render_scene(self: *Renderer, rect: Rect, scene: *Node) GpuCommandBuffer {
+    _ = rect;
+    _ = scene;
+
+    const command_encoder = self.device.createCommandEncoder();
+    defer command_encoder.deinit();
+
+    return command_encoder.finish();
 }
