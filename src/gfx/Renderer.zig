@@ -14,6 +14,7 @@ const GpuStoreOp = webgpu.GpuStoreOp;
 const ui = @import("../ui/ui.zig");
 const AnyView = @import("../ui/view.zig").AnyView;
 const Node = ui.node.Node;
+const Camera = @import("../ui/spatial/Camera.zig");
 const Color = ui.Color;
 const geometry = @import("../ui/geometry.zig");
 const Rect = geometry.Rect;
@@ -27,6 +28,7 @@ pub const Renderer = @This();
 
 const RenderTarget = struct {
     scene: *Node,
+    camera: Camera,
     rect: Rect,
 };
 
@@ -86,7 +88,7 @@ pub fn render(self: *Renderer, allocator: std.mem.Allocator, view: AnyView) !voi
     const command_buffers: []GpuCommandBuffer = try allocator.alloc(GpuCommandBuffer, render_targets.items.len);
 
     for (render_targets.items, 0..) |render_target, i| {
-        const command_buffer = self.render_scene(render_target.rect, render_target.scene);
+        const command_buffer = self.render_scene(render_target.rect, render_target.scene, render_target.camera);
         command_buffers[i] = command_buffer;
     }
 
@@ -113,15 +115,17 @@ fn collectRenderTargets(allocator: std.mem.Allocator, view: AnyView, parent_pos:
             const render_target: RenderTarget = .{
                 .rect = .{ .pos = pos, .size = v.rect.size },
                 .scene = v.scene,
+                .camera = v.camera,
             };
             try render_targets.append(allocator, render_target);
         },
     }
 }
 
-fn render_scene(self: *Renderer, rect: Rect, scene: *Node) GpuCommandBuffer {
+fn render_scene(self: *Renderer, rect: Rect, scene: *Node, camera: Camera) GpuCommandBuffer {
     _ = rect;
     _ = scene;
+    _ = camera;
 
     const command_encoder = self.device.createCommandEncoder();
     defer command_encoder.deinit();

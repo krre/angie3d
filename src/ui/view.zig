@@ -2,6 +2,7 @@ const std = @import("std");
 const ArrayList = std.ArrayList;
 const Allocator = std.mem.Allocator;
 const Node = @import("node/node.zig").Node;
+const Camera = @import("spatial/Camera.zig");
 const geometry = @import("geometry.zig");
 const Rect = geometry.Rect;
 const Size2D = geometry.Size2D;
@@ -9,11 +10,13 @@ const Pos2D = geometry.Pos2D;
 
 pub const View = struct {
     scene: *Node,
+    camera: Camera,
     rect: Rect,
 
     pub fn init(scene: *Node) View {
         return View{
             .scene = scene,
+            .camera = Camera.init(),
             .rect = .{},
         };
     }
