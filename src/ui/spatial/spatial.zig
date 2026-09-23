@@ -1,3 +1,5 @@
+pub const Camera = @import("Camera.zig");
+
 const Node = @import("../node/node.zig").Node;
 const geometry = @import("../geometry.zig");
 const Transform = geometry.Transform;
