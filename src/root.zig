@@ -30,9 +30,9 @@ pub fn runApp(comptime ClientApp: type) void {
 }
 
 test "root reference declarations" {
+    std.testing.refAllDecls(core);
+    std.testing.refAllDecls(gfx);
+    std.testing.refAllDecls(ui);
     std.testing.refAllDecls(console);
     std.testing.refAllDecls(types);
-    std.testing.refAllDecls(core);
-    std.testing.refAllDecls(ui);
-    std.testing.refAllDecls(gfx);
 }
