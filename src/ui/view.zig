@@ -165,14 +165,14 @@ test "SplitView.resize horizontal" {
         .height = 50,
     });
 
-    try std.testing.expectEqual(@as(u32, 100), split_view.size.width);
-    try std.testing.expectEqual(@as(u32, 50), split_view.size.height);
+    try std.testing.expectEqual(@as(u32, 100), split_view.rect.size.width);
+    try std.testing.expectEqual(@as(u32, 50), split_view.rect.size.height);
 
-    try std.testing.expectEqual(@as(u32, 50), split_view.views.items[0].view.size.width);
-    try std.testing.expectEqual(@as(u32, 50), split_view.views.items[1].view.size.width);
+    try std.testing.expectEqual(@as(u32, 50), split_view.views.items[0].view.rect.size.width);
+    try std.testing.expectEqual(@as(u32, 50), split_view.views.items[1].view.rect.size.width);
 
-    try std.testing.expectEqual(@as(i32, 0), split_view.views.items[0].view.pos.x);
-    try std.testing.expectEqual(@as(i32, 50), split_view.views.items[1].view.pos.x);
+    try std.testing.expectEqual(@as(i32, 0), split_view.views.items[0].view.rect.pos.x);
+    try std.testing.expectEqual(@as(i32, 50), split_view.views.items[1].view.rect.pos.x);
 }
 
 test "SplitView.resize vertical" {
