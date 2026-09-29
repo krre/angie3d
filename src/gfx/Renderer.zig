@@ -88,7 +88,7 @@ pub fn render(self: *Renderer, allocator: std.mem.Allocator, view: AnyView) !voi
     const command_buffers: []GpuCommandBuffer = try allocator.alloc(GpuCommandBuffer, render_targets.items.len);
 
     for (render_targets.items, 0..) |render_target, i| {
-        const command_buffer = self.render_scene(render_target.rect, render_target.scene, render_target.camera);
+        const command_buffer = self.renderScene(render_target.rect, render_target.scene, render_target.camera);
         command_buffers[i] = command_buffer;
     }
 
@@ -122,7 +122,7 @@ fn collectRenderTargets(allocator: std.mem.Allocator, view: AnyView, parent_pos:
     }
 }
 
-fn render_scene(self: *Renderer, rect: Rect, scene: *Node, camera: Camera) GpuCommandBuffer {
+fn renderScene(self: *Renderer, rect: Rect, scene: *Node, camera: Camera) GpuCommandBuffer {
     _ = rect;
     _ = scene;
     _ = camera;
