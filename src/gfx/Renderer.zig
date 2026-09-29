@@ -80,7 +80,7 @@ pub fn clear(self: *Renderer) void {
     queue.submit(&[_]GpuCommandBuffer{command_buffer});
 }
 
-pub fn render(self: *Renderer, allocator: std.mem.Allocator, view: AnyView) !void {
+pub fn renderView(self: *Renderer, allocator: std.mem.Allocator, view: AnyView) !void {
     var render_targets = ArrayList(RenderTarget).empty;
     render_targets.deinit(allocator);
     try collectRenderTargets(allocator, view, .{}, &render_targets);

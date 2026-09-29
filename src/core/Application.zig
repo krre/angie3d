@@ -36,8 +36,8 @@ pub fn render(self: *Application) void {
     self.renderer.clear();
 
     if (self.view) |view| {
-        self.renderer.render(self.allocator, view) catch {
-            @panic("rendering error");
+        self.renderer.renderView(self.allocator, view) catch {
+            @panic("render view error");
         };
     }
 }
